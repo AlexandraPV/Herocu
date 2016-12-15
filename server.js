@@ -1,6 +1,6 @@
 var express  = require('express');
 var app      = express();
-//var port     = process.env.PORT || 8000;
+var port     = process.env.PORT || 8000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -16,6 +16,9 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.set('view engine', 'ejs');
+
+
+
 
 app.use(session({ secret: 'appallowpasstook' }));
 app.use(passport.initialize());
@@ -38,7 +41,15 @@ app.use(busboyBodyParser({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'design')));
 const salt = '%656_das9870';
 
-
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
 
 app.get('/', (req, res) => {
 
@@ -179,4 +190,4 @@ require('./app/routes.js')(app, passport);
 require('./config/passport')(passport);
 
 
-app.listen(8000, () => console.log('App started.'));
+app.listen(port, () => console.log('App started.'));
