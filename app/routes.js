@@ -1,6 +1,6 @@
 
 const mongodb = require('promised-mongo');
-const url = 'mongodb://AlisandraPV:MAUGLI98lisik@ds127958.mlab.com:27958/magaz';
+const url = 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz';
 const db = mongodb(url);
 var mongoose = require('mongoose');
 var User = require('../app/models/user');
