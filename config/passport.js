@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 const mongodb = require('promised-mongo');
 
 var User  = require('../app/models/user');
-const url = 'mongodb://localhost:27017/magaz';
+const url = 'mongodb://AlisandraPV:MAUGLI98lisik@ds127958.mlab.com:27958/magaz';
 const db = mongodb(url);
 var count = Math.floor(Math.random() * (70 - 60 + 1) + 60);
 

@@ -25,7 +25,7 @@ app.use(flash());
 const mongodb = require('promised-mongo');
 var path = require('path');
 const busboyBodyParser = require('busboy-body-parser');
-const url = 'mongodb://localhost:27017/magaz';
+const url = 'mongodb://AlisandraPV:MAUGLI98lisik@ds127958.mlab.com:27958/magaz';
 const db = mongodb(url);
 
 app.set('views', path.join(__dirname, 'views'));
@@ -175,7 +175,7 @@ app.get('/json', (req, res) => {
 ////////////////////////////////////////////////////////////////////
 
 
-require('./app/routes.js')(app, passport); 
+require('./app/routes.js')(app, passport);
 require('./config/passport')(passport);
 
 
