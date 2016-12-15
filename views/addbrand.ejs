@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>logo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="img/fav.png">
+  <script src="stylesheets/js/jquery.min.js"></script>
+  <script src="stylesheets/js/messageAddBrand.js"></script>
+  <link rel="stylesheet" href="stylesheets/js/jquery.min.js" type="text/css" media="all">
+
+  <script>
+  $(document).ready(function(){
+    $("#search_button").click(function(){
+      alert($("#search_input").val());
+      $.ajax({type:"GET",  data: {q:$("#search_input").val()}, success: function(result){
+        alert(result);
+      }});
+    });
+  });
+  </script>
+  <script>
+  $(document).ready(function(){
+      $("input").focus(function(){
+          $(this).css("border-color", "#4161E9");
+      });
+      $("input").blur(function(){
+          $(this).css("border-color", "#ABADB3");
+      });
+  });
+  </script>
+
+  <link rel="stylesheet" href="stylesheets/addstyle.css" type="text/css" media="all">
+
+<div class="container">
+
+        <header>
+
+          <nav>
+          <ul>
+          <li class="menu">
+            <a href="/">Головна</a></li>
+          <li><a href="/brands">Бренди</a></li>
+          <li><a href="/products">Каталог товарів</a></li>
+          <li><a href="/rules">Правила користування</a></li>
+          <li><a href="/profile">Акаунт</a></li>
+
+          <!-- <li><button> <img src="img/korzina1.png" href = "index.html"></button></li>-->
+          </ul>
+          </nav>
+
+            <div class="head">
+                <div class="logo">
+                    <a href="#"><img src="img/up.png" title="Logo" alt="Logo" /></a>
+                </div>
+
+                <section id="search">
+
+                  <form action="/searchwind"  method="get" enctype="form-data">
+
+                      <input type="text"  name='q' placeholder= "Search" >
+                      <input type="submit" value="search">
+                  </form>
+
+
+                    <ul id="social">
+                        <li><a href="https://www.facebook.com" title="facebook" rel="external nofollow"><img alt="" src="img/facebook.png"></a></li>
+                        <li><a href="https://twitter.com" title="twitter" rel="external nofollow"><img alt="" src="img/twitter.png"></a></li>
+                        <li><a href="https://vk.com/" title="vk" rel="external nofollow"><img alt="" src="img/vk.png"></a></li>
+                        <li><a href="https://ok.ru" title="odnoklassniki" rel="external nofollow"><img alt="" src="img/odnoklassniki.png"></a></li>
+                        <li><a href="https://www.youtube.com" title="youtube" rel="external nofollow"><img alt="" src="img/youtube.png"></a></li>
+                    </ul>
+                </section>
+            </div>
+
+            <section id="submenu">
+              <ul>
+              <li><a href="/comp">Комп'ютери та ноутбуки</a></li>
+              <li><a href="/phones">Телефони</a></li>
+              <li><a href="/home">Товари для дому</a></li>
+              <li><a href="/cloth">Одяг та взуття</a></li>
+              <li><a href="/book">Книги та канцтовари</a></li>
+              <li><a href="/applhome">Побутова техніка</a></li>
+              </ul>
+            </section>
+
+        </header>
+
+
+
+        <div id="main">
+            <section id="content">
+                <div id="columL">
+                     <h3>Add brand</h3>
+          <form action='/addbrand' method='POST' class='add-form reg-form rf' enctype="multipart/form-data">
+
+   		<div class='form-row'>
+   			<label for='title'>Name: </label>
+       		<input maxlength="30" type='text' class="rfield test" id='name' name='name'>
+          <span id="msg" style="float:right; margin-right:10px"></span>
+     		</div>
+
+        <div class='form-row'>
+          <label for='brand'>Founder: </label>
+          <input maxlength="100" type='text' class="rfield test" id='founder' name='founder'>
+          <span id="msg1" style="float:right; margin-right:10px"></span>
+        </div>
+
+     		<div class='form-row'>
+       		<label for='color'>Date: </label>
+       		<input maxlength="20" type='date' class="rfield test" id='date' name='date'>
+          <span id="msg2" style="float:right; margin-right:10px"></span>
+   		</div>
+
+   		<div class='form-row'>
+   			<label for='weight'>Staf: </label>
+   			<input maxlength="20" type='text' class="rfield test" id='staf' name='staf'>
+        <span id="msg3" style="float:right; margin-right:10px"></span>
+   		</div>
+
+   		<div class='form-row'>
+   			<label for='guarantee'>Cost: </label>
+   			<input maxlength="20" type='text' class="rfield test" id='cost' name='cost'>
+        <span id="msg4" style="float:right; margin-right:10px"></span>
+   		</div>
+
+      <p>Add photo</p>
+         <input type='file' name='avatar1' />
+
+   		<div class="form-row">
+   			<input type="submit" class="btn_submit disabled" value='Add'>
+   		</div>
+
+   	</form>
+                </div>
+                <div id="columR">
+                    <h3>Top sells</h3>
+                    <ul>
+                           <% sales.filter(x => x.title).forEach( sale => { %>
+                        <li>
+                            <div class="img"><a href="/products/<%=sale.href%>"><img alt="" src='data:image/jpg;base64,<%= sale.avatar1 %>'></a></div>
+                            <div class="info">
+                                <a class="title" href="/products/<%=sale.href%>"><%= sale.title %></a>
+                                <div class="price">
+                                    <span id="lprice" class="usual"> $<%= sale.lastprice %> </span>&nbsp;
+                                    <span class="special">$<%= sale.price %></span>
+                                </div>
+                            </div>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+
+    <footer>
+
+             Copyright © 2016 Aleksandra Pyvovarchuk
+
+    </footer>
+
+</div>
+
+</body></html>

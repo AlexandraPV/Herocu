@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>logo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="img/fav.png">
+  <link rel="stylesheet" href="stylesheets/stylecont.css" type="text/css" media="all">
+  <link rel="stylesheet" href="stylesheets/stylePag.css">
+  <link rel="stylesheet" href="stylesheets/js/jquery.min.js" type="text/css" media="all">
+
+  <!--<script src="stylesheets/js/jquery.min.js"></script>-->
+  <script>
+  $(document).ready(function(){
+    $("#search_button").click(function(){
+      alert($("#search_input").val());
+      $.ajax({type:"GET",  data: {q:$("#search_input").val()}, success: function(result){
+        alert(result);
+      }});
+    });
+  });
+  </script>
+
+
+
+<body>
+
+<div class="container">
+
+        <header>
+
+          <nav>
+          <ul>
+          <li class="menu">
+            <a href="/">Головна</a></li>
+          <li><a href="/brands">Бренди</a></li>
+          <li><a href="/products">Каталог товарів</a></li>
+          <li><a href="/rules">Правила користування</a></li>
+          <li><a href="/profile">Акаунт</a></li>
+    <!-- <li><button> <img src="img/korzina1.png" href = "index.html"></button></li>-->
+          </ul>
+          </nav>
+
+            <div class="head">
+                <div class="logo">
+                    <a href="#"><img src="img/up.png" title="Logo" alt="Logo" /></a>
+                </div>
+
+                <section id="search">
+
+                  <form action="/searchwind"  method="get" enctype="form-data">
+
+                      <input type="text"  name='q' placeholder= "Search" >
+                      <input type="submit" value="search">
+                  </form>
+
+                    <ul id="social">
+                      <li><a href="https://www.facebook.com" title="facebook" rel="external nofollow"><img alt="" src="img/facebook.png"></a></li>
+                      <li><a href="https://twitter.com" title="twitter" rel="external nofollow"><img alt="" src="img/twitter.png"></a></li>
+                      <li><a href="https://vk.com/" title="vk" rel="external nofollow"><img alt="" src="img/vk.png"></a></li>
+                      <li><a href="https://ok.ru" title="odnoklassniki" rel="external nofollow"><img alt="" src="img/odnoklassniki.png"></a></li>
+                      <li><a href="https://www.youtube.com" title="youtube" rel="external nofollow"><img alt="" src="img/youtube.png"></a></li>
+                  </ul>
+                </section>
+            </div>
+
+            <section id="submenu">
+              <ul>
+              <li><a href="/comp">Комп'ютери та ноутбуки</a></li>
+              <li><a href="/phones">Телефони</a></li>
+              <li><a href="/home">Товари для дому</a></li>
+              <li><a href="/cloth">Одяг та взуття</a></li>
+              <li><a href="/book">Книги та канцтовари</a></li>
+              <li><a href="/applhome">Побутова техніка</a></li>
+              </ul>
+            </section>
+
+        </header>
+
+
+
+
+        <div id="main">
+            <section id="content">
+                <div id="columL">
+                     <h3>Умови використання сайту</h3>
+                    <ul>
+
+
+                        <li>
+                            <div class="cont">
+                                <a  class="title">Використання сайту</a>
+                              <p >Сайт Logo дозволяє вам переглядати та завантажувати матеріали цього сайту тільки для особистого некомерційного використання, за умови збереження вами всієї інформації про авторське право та інших відомостей про право власності, що містяться у вихідних матеріалах і будь-яких їхніх копіях. Заборонено змінювати матеріали цього cайту, а також поширювати або демонструвати їх у будь-якому вигляді або використовувати їх будь-яким іншим чином для суспільних чи комерційних цілей. Будь-яке використання цих матеріалів на інших сайтах або в комп'ютерних мережах заборонено.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cont">
+                                <a  class="title">Реєстрація на сайті</a>
+                              <p >Реєструючись на cайті, ви погоджуєтеся надати достовірну та точну інформацію про себе і свої контактні дані. У результаті реєстрації ви отримуєте логін і пароль, за безпеку яких ви несете відповідальність. Ви також несете відповідальність за всі дії під вашим логіном і паролем на cайті. У разі втрати реєстраційних даних ви зобов'язуєтеся повідомити нам про це.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="cont">
+                                <a  class="title">Зворотний зв'язок і коментарі</a>
+                              <p >Звертаючись до нас або залишаючи коментарі на сайті, ви несете відповідальність, що це повідомлення не є незаконним, шкідливим, загрозливим, наклепницьким, суперечить моральним нормам, порушує авторські права, пропагує ненависть і/або дискримінацію людей за расовою, етнічною, статевою, релігійною, соціальною ознаками, містить образи на адресу конкретних осіб або організацій, а також будь-яким іншим чином порушує чинне законодавство України. Ви погоджуєтеся, що будь-яке ваше повідомлення Logo може видаляти без вашої на те згоди, а також безоплатно використовувати на власний розсуд. Logo не несе відповідальності за будь-яку інформацію, розміщену користувачами cайту.</p>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="columR">
+                    <h3>Top sells</h3>
+                    <ul>
+                           <% sales.filter(x => x.title).forEach( sale => { %>
+
+                        <li>
+                            <div class="img"><a href="/products/<%=sale.href%>"><img alt="" src='data:image/jpg;base64,<%= sale.avatar1 %>'></a></div>
+                            <div class="info">
+                                <a class="title" href="/products/<%=sale.href%>"><%= sale.title %></a>
+                                <div class="price">
+                                    <span id="lprice" class="usual"> $<%= sale.lastprice %> </span>&nbsp;
+                                    <span class="special">$<%= sale.price %></span>
+                                </div>
+                            </div>
+                        </li>
+                        <% }); %>
+
+
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+
+    <footer>
+
+             Copyright © 2016 Aleksandra Pyvovarchuk
+
+    </footer>
+
+</div>
+
+</body></html>

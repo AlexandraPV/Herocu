@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>logo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="img/fav.png">
+
+
+<link rel="stylesheet" href="../stylesheets/styleprof.css" type="text/css" media="all">
+
+<body>
+
+<div class="container">
+
+        <header>
+
+          <nav>
+          <ul>
+          <li class="menu">
+            <a href="/">Головна</a></li>
+          <li><a href="/brands">Бренди</a></li>
+          <li><a href="/products">Каталог товарів</a></li>
+          <li><a href="/rules">Правила користування</a></li>
+          <li><a href="/profile">Акаунт</a></li>
+          <!-- <li><button> <img src="img/korzina1.png" href = "index.html"></button></li>-->
+          </ul>
+          </nav>
+
+            <div class="head">
+                <div class="logo">
+                    <a href="#"><img src="../stylesheets/img/up.png" title="Logo" alt="Logo" /></a>
+                </div>
+
+                <section id="search">
+
+                  <form action="/searchwind"  method="get" enctype="form-data">
+
+                      <input type="text"  name='q' placeholder= "Search" >
+                      <input type="submit" value="search">
+                  </form>
+
+                    <ul id="social">
+                      <li><a href="https://www.facebook.com" title="facebook" rel="external nofollow"><img alt="" src="../img/facebook.png"></a></li>
+                      <li><a href="https://twitter.com" title="twitter" rel="external nofollow"><img alt="" src="../img/twitter.png"></a></li>
+                      <li><a href="https://vk.com/" title="vk" rel="external nofollow"><img alt="" src="../img/vk.png"></a></li>
+                      <li><a href="https://ok.ru" title="odnoklassniki" rel="external nofollow"><img alt="" src="../img/odnoklassniki.png"></a></li>
+                      <li><a href="https://www.youtube.com" title="youtube" rel="external nofollow"><img alt="" src="../img/youtube.png"></a></li>
+                  </ul>
+                </section>
+            </div>
+
+            <section id="submenu">
+              <ul>
+              <li><a href="/comp">Комп'ютери та ноутбуки</a></li>
+              <li><a href="/phones">Телефони</a></li>
+              <li><a href="/home">Товари для дому</a></li>
+              <li><a href="/cloth">Одяг та взуття</a></li>
+              <li><a href="/book">Книги та канцтовари</a></li>
+              <li><a href="/applhome">Побутова техніка</a></li>
+              </ul>
+            </section>
+
+        </header>
+
+
+
+        <div id="main">
+            <section id="content">
+                <div id="columL">
+                    <h3>ProfileUser</h3>
+                 <div class = "left-left">
+                       <div class = "anons">
+                           <section>
+                             <div class = "image">
+               <a href = "#"> <img id="myImg" src='data:image/jpg;base64,<%= users.local.avatar %>' height="200" width="200" alt = "Apple"></a>
+                             </div>
+                           </section>
+                       </div>
+                    <div class="block">
+
+
+                    </div>
+                  </div>
+                <div class="columMed">
+<table>
+
+<tbody>
+  <tr>
+    <td><strong>Name</strong></td>
+
+    <td><%= users.local.first_name%></td>
+  </tr>
+  <tr>
+    <td><strong>Surname</strong></td>
+
+    <td><%= users.local.second_name%></td>
+  </tr>
+
+  <tr>
+    <td><strong>Phone</strong></td>
+
+    <td><%= users.local.phone %></td>
+  </tr>
+
+    <td><strong>About myself: </strong></td>
+
+    <td><%= users.local.about %></td>
+  </tr>
+
+</tbody>
+</table>
+<ul>
+    <li>
+      <div class="info">
+
+
+
+
+       <% if(user.local.login ==users.local.login) { %>
+          <div class="actions">
+              <a href="/logout" >Logout</a>
+
+
+             <form action = "/cart" method="get">
+                <input type="text" hidden="true" name="cart" value="<%= user.cart%>">
+               <input class = "b" type="submit" name="submit" value="Cart">
+             </form >
+                <form action = "/list" method="get">
+                  <input type="text" hidden="true" name="prid" value="<%= user.list%>">
+                 <input class = "b" type="submit" name="submit" value="Watch list">
+                  </form >
+
+                  <!--   <a id= "admin" href="/update">Update</a>-->
+             <a href="/update">Add information</a>
+          <input id="add_photo" class = "b" type="button" value="Add photo" >
+
+              <% if(user.local.role =="admin") { %>
+              <a id= "admin" href="/add">Add product</a>
+              <a id= "admin" href="/addbrand">Add brand</a>
+              <a id= "admin" href="/userslist">List of users</a>
+                  <% }; %>
+
+          </div>
+            <% }; %>
+
+          <script type="text/javascript">
+          $(document).ready(function(){
+          $("input#add_photo").click(function(){
+          $("div#p2").append("<div class='cont'><form action='/addphoto' method='POST' enctype='multipart/form-data' class='reg-form rf '><p class='title'>Add new photo</p><input type='file' name='avatar'><div class='form-row'>  <input type='text' hidden='true' name='prid' value='<%= user.identef%>'><input type='submit' class='btn_submit disabled' value='Add'></div></form></div>");
+          $("input#add_photo").remove();
+
+          })
+          });
+          </script>
+
+
+      </div>
+
+    </li>
+  </ul>
+                </div>
+
+                </div>
+                <div id="columR">
+                    <h3>Top sells</h3>
+                    <ul>
+                           <% sales.filter(x => x.title).forEach( sale => { %>
+                        <li>
+                            <div class="img"><a href="/products/<%=sale.href%>"><img alt="" src='data:image/jpg;base64,<%= sale.avatar1 %>'></a></div>
+                            <div class="info">
+                                <a class="title" href="/products/<%=sale.href%>"><%= sale.title %></a>
+                                <div class="price">
+                                    <span id="lprice" class="usual"> $<%= sale.lastprice %> </span>&nbsp;
+                                    <span class="special">$<%= sale.price %></span>
+                                </div>
+                            </div>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+
+    <footer>
+
+             Copyright © 2016 Aleksandra Pyvovarchuk
+
+    </footer>
+
+</div>
+
+</body></html>
