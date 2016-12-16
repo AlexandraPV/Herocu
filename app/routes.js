@@ -816,10 +816,10 @@ app.post('/deletebrand',isLoggedIn, (req, res) => {
 	User.find({"identef": parseInt(id)})
 	.then(users => {
 
-    Brand.find({"name": name}, function(err, prod) {
+    Brand.find({"name": title}, function(err, prod) {
       prod.remove();
 		})
-		.then(() => res.redirect('/products'))
+		.then(() => res.redirect('/brands'))
 		.catch(err => res.status(500).end(err));
 
 });
