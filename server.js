@@ -30,9 +30,7 @@ app.set('view engine', 'ejs');
 
 
 
-app.use(session({ store: new SessionStore({
-    url: 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz',
-    interval: 1200000}),
+app.use(session({ store: db,
 		secret: 'appallowpasstook' }));
 app.use(passport.initialize());
 app.use(passport.session());
