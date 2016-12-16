@@ -708,7 +708,7 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
         //  var str = [log,com].join(',');
           //var d = str.toString();
 			//console.log(d);
-      Composition.findOneAndUpdate({"href": id}, {
+      Prod.findOneAndUpdate({"href": id}, {
         $pull: {
             comments: {
               login: log,
