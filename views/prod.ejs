@@ -201,7 +201,7 @@ function changeImg(lin){
             <div class="cont">
               <% if(user.local.role =="admin") { %>
               <form action = "/deletecom" method="post">
-
+<input type="hidden" name="_csrf" value="<%=csrfToken%>">
                  <input type="text" hidden="true" name="prtitle" value="<%=i%>">
                  <input type="text" hidden="true" name="prid" value="<%= prod.href%>">
                  <input type="text" hidden="true" name="prlog" value="<%=prod.comments[i][0]%>">

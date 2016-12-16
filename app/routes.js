@@ -116,7 +116,7 @@ app.post('/addcomment',parseForm, csrfProtection,isLoggedIn, (req, res) => {
       .catch(err => res.status(500).end(err));
 });
 
-app.get('/products/*',isLoggedIn, (req, res) => {
+app.get('/products/*',isLoggedIn, csrfProtection, (req, res) => {
     	var decrease = req.path;
       decrease = decrease.slice(10);
       var uri_dec = decodeURIComponent(decrease);
@@ -129,7 +129,7 @@ app.get('/products/*',isLoggedIn, (req, res) => {
     			.then(sales => {
 
     			res.render('prod', {
-
+              csrfToken: req.csrfToken(),
     				prod: prod,
             sales: sales,
             user : req.user
