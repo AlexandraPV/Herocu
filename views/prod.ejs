@@ -193,10 +193,10 @@ function changeImg(lin){
 
   <div class="com">
     <ul>
-      <% if(prod.comments.length>0){%>
+      <% if(mas.length>0){%>
         <h3>Comments:</h3>
       <%}%>
-      <% for (var i = 0; i < prod.comments.length; i++) {  %>
+      <% for (var i = 0; i < mas.length; i++) {  %>
         <li>
             <div class="cont">
               <% if(user.local.role =="admin") { %>
@@ -209,9 +209,9 @@ function changeImg(lin){
                  <input  type="submit" name="submit" value="X">
                   </form >
                 <%}%>
-                 <a  class="title" href="/profile/<%=prod.comments[i][0]%>"><%=prod.comments[i][0]%></a>
+                 <a  class="title" href="/profile/<%=mas[i][0]%>"><%=mas[i][0]%></a>
 
-            <p ><%= prod.comments[i][1]%></p>
+            <p ><%= mas[i][1]%></p>
             </div>
         </li>
           <%}%>
