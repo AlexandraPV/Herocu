@@ -697,7 +697,7 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 					var log = req.body.prlog;
 					var com = req.body.prcom;
 	        var i = parseInt(num);
-          var str = [log,com].join('');
+          var str = [log,com].join(',');
 		Prod.findOne({href: id})
 
 		.then(prod => {
