@@ -1,4 +1,3 @@
-/* base styles */
 * {
     margin: 0;
     padding: 0;
@@ -765,9 +764,7 @@ div.com{
     font-weight: bold;
     text-decoration: none;
 }
-#new {
-  display: inline;
-}
+
 .cont p{
   max-width: 500px;
   overflow: hidden;
