@@ -1,9 +1,7 @@
 
 const mongodb = require('promised-mongo');
-/*var cookieParser = require('cookie-parser');
-var csrf = require('csurf');
-var bodyParser = require('body-parser');
-var express = require('express');*/
+
+
 
 
 const url = 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz';
@@ -15,9 +13,7 @@ var Brand  = require('../app/models/brand');
 var Prod  = require('../app/models/prod');
 module.exports = function(app, passport) {
 
-/*  var csrfProtection = csrf({ cookie: true });
-  var parseForm = bodyParser.urlencoded({ extended: false });
-  app.use(cookieParser());*/
+
 app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
 });
@@ -41,8 +37,7 @@ app.get('/signup', function(req, res) {
     	});
     		})
 });
-/*csrfProtection*/
-/*parseForm, csrfProtection,*/
+
 app.get('/update', isLoggedIn, function(req, res) {
       Prod.find().skip(4).limit(7)
       .then(sales => {
