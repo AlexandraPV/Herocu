@@ -108,7 +108,15 @@ app.post('/addcomment', isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
-   Prod.update({"title": title}, {$push: {comments: [[user.local.login], [com]]}})
+
+    Prod.findAndUpdate({"title": title}, {
+           $push: {
+               'comments': {
+                   login: user.local.login,
+                   text: com
+               }
+           }
+       })
       .then(() => res.redirect('/products'))
       .catch(err => res.status(500).end(err));
 });
@@ -121,21 +129,20 @@ app.get('/products/*',isLoggedIn,  (req, res) => {
     	Prod.findOne({ href: uri_dec})
     		.then(prod => {
 
-          var str;
-          var mas = [];
-          mas=prod.comments;
+          //var str;
+          //var mas = [];
+          //mas=prod.comments;
         /*  for(var i=0; i<prod.comments.length; i++){
             var som = [];
           var mS=prod.comments[i];
           som = mS.split(",");
           mas.push(som);
         }*/
-          console.log(mas);
+          //console.log(mas);
     			Prod.find().skip(5).limit(7)
     			.then(sales => {
 
     			res.render('prod', {
-            mas: mas,
     				prod: prod,
             sales: sales,
             user : req.user
@@ -703,12 +710,14 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 		Prod.findOne({href: id})
 
 		.then(prod => {
-			console.log(d);
-      Prod.findOne({"href": id}, function (err, doc){
-      doc.comments.pull([[log],[com]]);
-        //doc.comments
-        doc.save();
-      })
+			//console.log(d);
+      Composition.findAndUpdate({"href": id}, {
+        $pull: {
+            comments: {
+                _id: i
+            }
+        }
+    })
 						.then(() => res.redirect('/products'))
 						.catch(err => res.status(500).end(err));
 		});

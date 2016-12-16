@@ -196,7 +196,7 @@ function changeImg(lin){
       <% if(mas.length>0){%>
         <h3>Comments:</h3>
       <%}%>
-      <% for (var i = 0; i < mas.length; i++) {  %>
+      <% for (var i = 0; i < prod.comments.length; i++) {  %>
         <li>
             <div class="cont">
 
@@ -205,14 +205,14 @@ function changeImg(lin){
 
                  <input type="text" hidden="true" name="prtitle" value="<%=i%>">
                  <input type="text" hidden="true" name="prid" value="<%= prod.href%>">
-                 <input type="text" hidden="true" name="prlog" value="<%=mas[i][0]%>">
-                 <input type="text" hidden="true" name="prcom" value="<%=mas[i][1]%>">
+                 <input type="text" hidden="true" name="prlog" value="<%=prod.comments[i].login%>">
+                 <input type="text" hidden="true" name="prcom" value="<%=prod.comments[i].text%>">
                  <input  type="submit" name="submit" value="X">
                   </form >
                 <%}%>
-                 <a  class="title" href="/profile/<%=mas[i][0]%>"><%=mas[i][0]%></a>
+                 <a  class="title" href="/profile/<%=prod.comments[i].login%>"><%=prod.comments[i].login%></a>
 
-            <p ><%= mas[i][1]%></p>
+            <p ><%= prod.comments[i].text%></p>
             </div>
         </li>
           <%}%>
