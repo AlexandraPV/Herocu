@@ -120,9 +120,15 @@ app.get('/products/*',isLoggedIn,  (req, res) => {
 
     	Prod.findOne({ href: uri_dec})
     		.then(prod => {
-          var str = prod.comments;
+
+          var str;
           var mas = [];
-          mas = str.split(",");
+          for(var i=0; i<prod.comments.length; i++){
+            var som = [];
+          var mS=prod.comments[i];
+          som = mS.split(",");
+          mas.push(som);
+        }
           console.log(mas);
     			Prod.find().skip(5).limit(7)
     			.then(sales => {
