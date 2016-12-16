@@ -1150,18 +1150,18 @@ app.post('/apiproductsupdate/*', function(req, res, next) {
 ///////////////////////JSON////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
-app.get('/logout',csrfProtection, function(req, res) {
+app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/login');
 });
 
-app.post('/signup',parseForm, csrfProtection, passport.authenticate('local-signup', {
+app.post('/signup', passport.authenticate('local-signup', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
 }));
 
-app.post('/login',parseForm, csrfProtection, passport.authenticate('local-login', {
+app.post('/login', passport.authenticate('local-login', {
           successRedirect : '/profile', // redirect to the secure profile section
           failureRedirect : '/login', // redirect back to the signup page if there is an error
           failureFlash : true // allow flash messages
