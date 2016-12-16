@@ -201,7 +201,7 @@ function changeImg(lin){
             <div class="cont">
               <% if(user.local.role =="admin") { %>
               <form action = "/deletecom" method="post">
-<input type="hidden" name="_csrf" value="<%=csrfToken%>">
+<input type="hidden" id = "csrf" name="_csrf" value="<%=csrfToken%>">
                  <input type="text" hidden="true" name="prtitle" value="<%=i%>">
                  <input type="text" hidden="true" name="prid" value="<%= prod.href%>">
                  <input type="text" hidden="true" name="prlog" value="<%=prod.comments[i][0]%>">
@@ -217,7 +217,24 @@ function changeImg(lin){
           <%}%>
       </ui>
 
-
+<script>
+function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+$("#csrf").attr("value") = getCookie("_csrf");
+</script>
 
 
 

@@ -107,7 +107,7 @@ app.get('/brpag*', isLoggedIn, (req, res) => {
 
 });
 
-app.post('/addcomment',parseForm, csrfProtection,isLoggedIn, (req, res) => {
+app.post('/addcomment',parseForm, csrfProtection, isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
