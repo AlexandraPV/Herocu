@@ -8,6 +8,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var SessionStore = require('session-mongoose')(express);
 var configDB = require('./config/database.js');
 //var User = require('../app/models/user');
 const mongodb = require('promised-mongo');
@@ -29,7 +30,10 @@ app.set('view engine', 'ejs');
 
 
 
-app.use(session({ secret: 'appallowpasstook' }));
+app.use(express.session({ store: new SessionStore({
+    url: 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz',
+    interval: 1200000}),
+		secret: 'appallowpasstook' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -195,7 +199,6 @@ app.get('/json', (req, res) => {
 
 require('./app/routes.js')(app, passport);
 require('./config/passport')(passport);
-
 function sessionCleanup() {
     sessionStore.all(function(err, sessions) {
         for (var i = 0; i < sessions.length; i++) {
