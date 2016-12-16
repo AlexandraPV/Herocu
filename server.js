@@ -61,12 +61,12 @@ if (app.get('env') === 'development') {
 
 app.get('/', (req, res) => {
 
-		Prod.find().limit(9)
-		.then(prods => {
-			Prod.find().skip(4).limit(7)
-			.then(sales => {
-				Prod.count()
-					.then(count => {
+		Prod.find({}).limit(9).exec(function(err, prods){
+    console.log(prods);
+			Prod.find().skip(4).limit(7).exec(function(err, sales){
+
+				Prod.count().exec(function(err, count){
+
 			res.render('index', {
 				sales: sales,
 				prods: prods,

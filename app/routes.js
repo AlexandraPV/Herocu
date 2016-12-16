@@ -3,7 +3,7 @@ const mongodb = require('promised-mongo');
 const url = 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz';
 //const db = mongodb(url);
 var mongoose = require('mongoose');
-
+var path = require('path');
 var User = require('../app/models/user');
 var Brand  = require('../app/models/brand');
 var Prod  = require('../app/models/prod');
@@ -235,8 +235,8 @@ app.get('/brands',isLoggedIn, (req, res) => {
           if(value.length > 9){
           value = value.slice(12);
 
-            var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
-            bar = new RegExp(bar);
+            //var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
+            //bar = new RegExp(bar);
             console.log(value);
                    Prod.find().skip(1).limit(7)
                    .then(sales => {
@@ -261,8 +261,9 @@ app.get('/brands',isLoggedIn, (req, res) => {
         		.then(prods => {
         			Prod.find().skip(1).limit(7)
         			.then(sales => {
-                Brand.count()
-                 .then(count => {
+                Brand.find()
+                 .then(pr => {
+                   var count = pr.length;
         			res.render('brands', {
         				prods: prods,
         				sales:sales,
@@ -519,15 +520,15 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
 });
 
 
-///
-app.get('/add', (req, res) => {
+
+app.get('/add', isLoggedIn, (req, res) => {
 			Prod.find().skip(5).limit(7)
 			.then(sales => {
 			res.render('add',{
 				sales:sales
 			});
 				})
-});
+});           //////////
 
 app.get('/rules', (req, res) => {
 		Prod.find().skip(5).limit(7)
@@ -538,14 +539,14 @@ app.get('/rules', (req, res) => {
 			})
 });
 
-app.get('/addbrand', (req, res) => {
+app.get('/addbrand', isLoggedIn, (req, res) => {
 		Prod.find().skip(5).limit(7)
 		.then(sales => {
 		res.render('addbrand',{
 			sales:sales
 		});
 			})
-});
+});    /////////
 
 app.post('/addtocart', isLoggedIn,  (req, res) => {
 	var title = req.body.prtitle;
@@ -554,21 +555,26 @@ app.post('/addtocart', isLoggedIn,  (req, res) => {
 	User.find({"identef": parseInt(id)})
 	.then(users => {
 		console.log(users);
-				User.update({"identef": parseInt(id)}, {$push: {"cart": title}});
-		})
+    User.findOne({"identef": parseInt(id)}, function (err, doc){
+    doc.cart.push(title);
+      doc.save();
+      })
 		.then(() => res.redirect('/products'))
 		.catch(err => res.status(500).end(err));
 
+  });
 });
-
 app.post('/addtolist', isLoggedIn,  (req, res) => {
 		var title = req.body.prtitle;
 	  var id= req.body.prid;
 		console.log(id);
 		User.find({"identef": parseInt(id)})
 		.then(users => {
-			console.log(users);
-					User.update({"identef": parseInt(id)}, {$push: {"list": title}});
+      User.findOne({"identef": parseInt(id)}, function (err, doc){
+        doc.list.push(title);
+        doc.save();
+      });
+
 			})
 			.then(() => res.redirect('/products'))
 			.catch(err => res.status(500).end(err));
@@ -582,13 +588,14 @@ app.post('/deleteprod', isLoggedIn,  (req, res) => {
 			User.find({"identef": parseInt(id)})
 			.then(users => {
 
-						Prod.remove({"title": name});
+						Prod.find({"title": name}, function(err, prod) {
+              prod.remove();
 				})
 				.then(() => res.redirect('/products'))
 				.catch(err => res.status(500).end(err));
 
 });
-
+});
 app.post('/update', isLoggedIn, (req, res) => {
 			var first_name = req.body.first_name;
 			var second_name = req.body.second_name;
@@ -641,7 +648,7 @@ app.post('/addphoto', isLoggedIn, (req, res) => {
 				.then(() => res.redirect('/profile'))
 				.catch(err => res.status(500).end(err));
 
-});
+});     ///////////
 
 app.delete('/deletefromlist*',isLoggedIn,  (req, res) => {
 
@@ -652,8 +659,11 @@ app.delete('/deletefromlist*',isLoggedIn,  (req, res) => {
      console.log(value);
 
      id=req.user.identef;
+     User.findOne({"identef": parseInt(id)}, function (err, doc){
+       doc.list.pull(value);
+       doc.save();
+     })
 
-              User.update({"identef": parseInt(id)}, {$pull: {"list": {$in:[value]}}})
               .then(del =>res.json({ error: "NONE" }))
               .catch(err => res.status(404).json({ error: "ERROR" }));
   });
@@ -668,8 +678,10 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 		Prod.findOne({href: id})
 		.then(prod => {
 			console.log(prod.brand);
-
-		Prod.update({href: id}, {$pull:{"comments" : [log, com]}})
+      Prod.findOne({"href": id}, function (err, doc){
+        doc.comments.pull([log, com]);
+        doc.save();
+      })
 						.then(() => res.redirect('/products'))
 						.catch(err => res.status(500).end(err));
 		});
@@ -684,7 +696,10 @@ app.delete('/deletefromcart*', isLoggedIn,  (req, res) => {
 
    id=req.user.identef;
 
-						User.update({"identef": parseInt(id)}, {$pull: {"cart": {$in:[value]}}})
+   User.findOne({"identef": parseInt(id)}, function (err, doc){
+     doc.cart.pull(value);
+     doc.save();
+   })
             .then(del =>res.json({ error: "NONE" }))
             .catch(err => res.status(404).json({ error: "ERROR" }));
 });
@@ -701,46 +716,43 @@ app.post('/add', isLoggedIn, (req, res) => {
 	var brand = req.body.brand;
 	var admEmail = req.body.email;
 	var admpass = req.body.password;
-	var avaFile1 = req.files.avatar1;
-	var avaFile2 = req.files.avatar2;
-	var avaFile3 = req.files.avatar3;
-	var avaFile4 = req.files.avatar4;
+	var avaFile1 = req.files.avatar1.path;
+	var avaFile2 = req.files.avatar2.path;
+	var avaFile3 = req.files.avatar3.path;
+	var avaFile4 = req.files.avatar4.path;
 	var hrefProd = req.body.title;
-
+    console.log(avaFile1);
 	hrefProd = hrefProd.replace(/ /g, '').replace(/\//g, '');
 	hrefProd= hrefProd.toLowerCase();
 	var hrProd =( '/' + hrefProd);
 
-	var base64String1 = avaFile1.data.toString('base64');
-	var base64String2 = avaFile2.data.toString('base64');
-	var base64String3 = avaFile3.data.toString('base64');
-	var base64String4 = avaFile4.data.toString('base64');
-	if (!title || !color || !brand || !price || !lastprice || !type || !weight || !description || !guarantee || !avaFile1 || !avaFile2 || !avaFile3 || !avaFile4) res.status(400).end('not ok');
+	//var base64String1 = avaFile1.data.toString('base64');
+	//var base64String2 = avaFile2.data.toString('base64');
+	//var base64String3 = avaFile3.data.toString('base64');
+	//var base64String4 = avaFile4.data.toString('base64');
+	if (!title || !color || !brand || !price || !lastprice || !type || !weight || !description || !guarantee ) res.status(400).end('not ok');
 	else {
-		Prod.findOne({ title: title})
-			.then(prod => {
+		Prod.findOne({ title: title}, function(err, prod){
 				if (prod) res.status(200).end('prod exists');
 				else {
-
-
-					return Prod.insert({
-						title: title,
-						color: color,
-						weight: weight,
-						guarantee: guarantee,
-						description: description,
-						price: price,
-						lastprice: lastprice,
-						type:type,
-						brand: brand,
-						comments: [],
-						avatar1: base64String1,
-						avatar2: base64String2,
-						avatar3: base64String3,
-						avatar4: base64String4,
-						href: hrefProd,
-
-					});
+          var newPro = new Prod({
+            title: title,
+            color: color,
+            weight: weight,
+            guarantee: guarantee,
+            description: description,
+            price: price,
+            lastprice: lastprice,
+            type:type,
+            brand: brand,
+            comments: [],
+            avatar1: avaFile1,
+            avatar2: avaFile2,
+            avatar3: avaFile3,
+            avatar4: avaFile4,
+            href: hrefProd,
+              });
+              newPro.save();
 				}
 			})
 			.then(() => res.redirect('/products'))
@@ -765,43 +777,43 @@ app.post('/addbrand', isLoggedIn, (req, res) => {
 
 	var base64String1 = avaFile1.data.toString('base64');
 
-	if (!name || !founder || !date || !staf || !cost || !avaFile1 ) res.status(400).end('not ok');
+	if (!name || !founder || !date || !staf || !cost ) res.status(400).end('not ok');
 	else {
 		Brand.findOne({ name: name})
 			.then(prod => {
 				if (prod) res.status(200).end('brand exists');
 				else {
-
-					return Brand.insert({
-						name: name,
-						founder: founder,
-						date: date,
-						staf: stafI,
-						cost: costI,
-						avatar1: base64String1,
-
-						href: hrefProd
-					});
+          var newBr = new Brand({
+            name: name,
+            founder: founder,
+            date: date,
+            staf: stafI,
+            cost: costI,
+            avatar1: avaFile1,
+            href: hrefProd
+              });
+              newBr.save();
 				}
 			})
 			.then(() => res.redirect('/brands'))
 			.catch(err => res.status(500).end(err));
 	}
-});
+});           //////////
 
-app.post('/deleteprod',isLoggedIn, (req, res) => {
+/*app.post('/deleteprod',isLoggedIn, (req, res) => {
 	var title = req.body.prtitle;
   var id= req.body.prid;
 
 	User.find({"identef": parseInt(id)})
 	.then(users => {
 
-				Prod.remove({"title": title});
+    Prod.find({"title": name}, function(err, prod) {
+      prod.remove();
 		})
 		.then(() => res.redirect('/products'))
 		.catch(err => res.status(500).end(err));
 
-});
+});   */               /////////
 
 app.get('/userslist',isLoggedIn, (req, res) => {
   User.find().limit(9)
