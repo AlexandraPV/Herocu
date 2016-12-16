@@ -15,6 +15,7 @@
     "busboy-body-parser": "^0.2.0",
     "connect": "^2.30.2",
     "connect-flash": "^0.1.1",
+    "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
