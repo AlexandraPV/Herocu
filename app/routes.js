@@ -718,7 +718,7 @@ app.delete('/deletefromcart*', isLoggedIn,  (req, res) => {
             .catch(err => res.status(404).json({ error: "ERROR" }));
 });
 
-app.post('/add',parseForm,  (req, res) => {
+app.post('/add',  (req, res) => {
 	var title = req.body.title;
 	var color = req.body.color;
 	var weight = req.body.weight;
