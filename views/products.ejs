@@ -7,7 +7,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="img/fav.png">
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="all">
   <link rel="stylesheet" href="stylesheets/stylePag.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
 <script type="text/javascript" src="../stylesheets/js/jquery-1.2.6.js"></script>
   <!--<script src="stylesheets/js/jquery.min.js"></script>-->
 
@@ -85,52 +85,49 @@
 
         <div id="main">
             <section id="content">
-                <div id="columL">
-                     <h3>Interesting offers</h3>
+              <div id="columL">
+                   <h3>Interesting offers</h3>
 
-                    <ul>
-                      <div class="bl-container">
-                      <% prods.filter(x => x.title).forEach( prod => { %>
+                  <ul>
+                    <div class="bl-container">
+                    <% prods.filter(x => x.title).forEach( prod => { %>
 <div class="bl">
-                        <li>
-                          <% if(user.local.role =="admin") { %>
-                            <div class="info">
-                          <div class="actions">
-                          <form action = "/deleteprod" method="post">
-                             <input type="text" hidden="true" name="prtitle" value="<%= prod.title %>">
-                             <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
-                             <input class = "b" type="submit" name="submit" value="X">
-                             </form >
-                          </div>
+                      <li>
+                        <% if(user.local.role =="admin") { %>
+                          <div class="info">
+                        <div class="actions">
+                        <form action = "/deleteprod" method="post">
+                           <input type="text" hidden="true" name="prtitle" value="<%= prod.title %>">
+                           <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
+                           <input class = "b" type="submit" name="submit" value="X">
+                           </form >
                         </div>
-                              <% }; %>
-                            <div class="img"><a id="path" href="/products/<%=prod.href%>"><img alt="" src='data:image/jpg;base64,<%= prod.avatar1 %>'></a></div>
-                            <div class="info">
-                                <a  class="title" href="/products/<%=prod.href%>"><%= prod.title %></a>
-
-                              <p class="size"> <%= prod.description %> </p>
-                                <div class="price">
-                                    <span class="st">Our price:</span><strong>$<%= prod.price %></strong>
-                                </div>
-                                <div class="actions">
-
-                                    <a href="/products/<%=prod.href%>">Details</a>
-                                    <form action = "/addtocart" method="post">
-                                      <input type="text" hidden="true" name="prtitle" value="<%= prod.href %>">
-                                      <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
-                                     <input class = "b" type="submit" name="submit" value="Add to cart">
-                                      </form >
-                                  <!--  <a href="#">Add to cart</a>-->
-                                </div>
-                            </div>
-                        </li>
-  </div>
-
-                        <% }); %>
+                      </div>
+                            <% }; %>
+                          <div class="img"><a id="path" href="/products/<%=prod.href%>"><img alt="" src='data:image/jpg;base64,<%= prod.avatar1 %>'></a></div>
+                          <div class="info">
+                              <a  class="title" href="/products/<%=prod.href%>"><%= prod.title %></a>
+                            <p class="size"> <%= prod.description %> </p>
+                              <div class="price">
+                                  <span class="st">Our price:</span><strong>$<%= prod.price %></strong>
+                              </div>
+                              <div class="actions">
+                                  <a href="/products/<%=prod.href%>">Details</a>
+                                  <form action = "/addtocart" method="post">
+                                    <input type="text" hidden="true" name="prtitle" value="<%= prod.href %>">
+                                    <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
+                                   <input class = "b" type="submit" name="submit" value="Add to cart">
+                                    </form >
+                                <!--  <a href="#">Add to cart</a>-->
+                              </div>
+                          </div>
+                      </li>
 </div>
-                    </ul>
+                      <% }); %>
+</div>
+                  </ul>
 
-                </div>
+              </div>
                 <div id="columR">
                     <h3>Top sells</h3>
                     <ul>
