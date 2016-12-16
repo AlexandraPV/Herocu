@@ -108,7 +108,7 @@ app.post('/addcomment', isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
-   Prod.update({"title": title}, {$push: {comments: [login:user.local.login, com: com]}})
+   Prod.update({"title": title}, {$push: {comments: [{login:user.local.login, com: com]}}})
       .then(() => res.redirect('/products'))
       .catch(err => res.status(500).end(err));
 });
