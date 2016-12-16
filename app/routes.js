@@ -707,9 +707,6 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 	        var i = parseInt(num);
         //  var str = [log,com].join(',');
           //var d = str.toString();
-		Prod.findOne({href: id})
-
-		.then(prod => {
 			//console.log(d);
       Composition.findOneAndUpdate({"href": id}, {
         $pull: {
@@ -721,7 +718,7 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
     })
 						.then(() => res.redirect('/products'))
 						.catch(err => res.status(500).end(err));
-		});
+
 });
 
 app.delete('/deletefromcart*', isLoggedIn,  (req, res) => {
