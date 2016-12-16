@@ -21,21 +21,21 @@ app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
 });
 
-app.get('/login',csrfProtection, function(req, res) {
+app.get('/login', function(req, res) {
 
       Prod.find().skip(2).limit(7)
      .then(sales => {
-     res.render('login.ejs', { csrfToken: req.csrfToken() },{
+     res.render('login.ejs', {
        sales:sales
      });
        })
 });
 
-app.get('/signup',csrfProtection, function(req, res) {
+app.get('/signup', function(req, res) {
 
       Prod.find().skip(4).limit(7)
     	.then(sales => {
-    	res.render('signup.ejs', { csrfToken: req.csrfToken() },{
+    	res.render('signup.ejs', {
     		sales:sales
     	});
     		})
