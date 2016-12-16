@@ -704,8 +704,8 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 		.then(prod => {
 			console.log(d);
       Prod.findOne({"href": id}, function (err, doc){
-
-        doc.comments.slice(i,1);
+      console.log(doc.comments);
+        //doc.comments
         doc.save();
       })
 						.then(() => res.redirect('/products'))
