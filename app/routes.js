@@ -141,11 +141,11 @@ app.get('/profile/*',isLoggedIn, (req, res) => {
 
         User.findOne({'local.login': uri_dec})
         .then(docs => {
-       var us1 = docs.identef;
+
        //var us1p = parseInt(us1);
        var us2 = req.user.identef;
        //var us2p = parseInt(us2);
-       console.log(docs);
+       console.log(docs.identef);
        console.log("us2" + us2);
             Prod.find().skip(5).limit(7)
             .then(sales => {

@@ -85,7 +85,8 @@ app.get('/', (req, res) => {
 app.get('/pag*', (req, res) => {
 			var decrease = req.path;
 			decrease = decrease.slice(4);
-			var i = parseInt(decrease);
+
+
 			Prod.find()
 			 .then(pr => {
 				 var count = pr.length;
