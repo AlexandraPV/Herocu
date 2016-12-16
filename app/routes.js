@@ -108,7 +108,7 @@ app.post('/addcomment', isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
-   Prod.update({"title": title}, {$push: {comments: [{login:user.local.login, com: com}]}})
+   Prod.update({"title": title}, {$push: {comments: [user.local.login, com]}})
       .then(() => res.redirect('/products'))
       .catch(err => res.status(500).end(err));
 });
@@ -120,13 +120,15 @@ app.get('/products/*',isLoggedIn,  (req, res) => {
 
     	Prod.findOne({ href: uri_dec})
     		.then(prod => {
-          console.log(prod.comments);
-          console.log(prod.comments[0][1]);
+          var str = prod.comments;
+          var mas = [];
+          mas = str.split(",");
+          console.log(mas);
     			Prod.find().skip(5).limit(7)
     			.then(sales => {
 
     			res.render('prod', {
-
+            mas: mas,
     				prod: prod,
             sales: sales,
             user : req.user
