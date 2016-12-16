@@ -1,9 +1,9 @@
 
 const mongodb = require('promised-mongo');
-var cookieParser = require('cookie-parser');
+/*var cookieParser = require('cookie-parser');
 var csrf = require('csurf');
 var bodyParser = require('body-parser');
-var express = require('express');
+var express = require('express');*/
 
 
 const url = 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz';
@@ -15,9 +15,9 @@ var Brand  = require('../app/models/brand');
 var Prod  = require('../app/models/prod');
 module.exports = function(app, passport) {
 
-  var csrfProtection = csrf({ cookie: true });
+/*  var csrfProtection = csrf({ cookie: true });
   var parseForm = bodyParser.urlencoded({ extended: false });
-  app.use(cookieParser());
+  app.use(cookieParser());*/
 app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
 });
@@ -41,11 +41,12 @@ app.get('/signup', function(req, res) {
     	});
     		})
 });
-
-app.get('/update',csrfProtection, isLoggedIn, function(req, res) {
+/*csrfProtection*/
+/*parseForm, csrfProtection,*/
+app.get('/update', isLoggedIn, function(req, res) {
       Prod.find().skip(4).limit(7)
       .then(sales => {
-      res.render('update.ejs', { csrfToken: req.csrfToken() },{
+      res.render('update.ejs', {
         sales:sales,
         user : req.user
       });
@@ -108,7 +109,7 @@ app.get('/brpag*', isLoggedIn, (req, res) => {
 
 });
 
-app.post('/addcomment',parseForm, csrfProtection, isLoggedIn, (req, res) => {
+app.post('/addcomment', isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
@@ -117,7 +118,7 @@ app.post('/addcomment',parseForm, csrfProtection, isLoggedIn, (req, res) => {
       .catch(err => res.status(500).end(err));
 });
 
-app.get('/products/*',isLoggedIn, csrfProtection, (req, res) => {
+app.get('/products/*',isLoggedIn,  (req, res) => {
     	var decrease = req.path;
       decrease = decrease.slice(10);
       var uri_dec = decodeURIComponent(decrease);
@@ -130,7 +131,7 @@ app.get('/products/*',isLoggedIn, csrfProtection, (req, res) => {
     			.then(sales => {
 
     			res.render('prod', {
-            csrfToken: req.csrfToken(),
+
     				prod: prod,
             sales: sales,
             user : req.user
@@ -538,10 +539,10 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
 
 
 
-app.get('/add',csrfProtection, isLoggedIn, (req, res) => {
+app.get('/add', isLoggedIn, (req, res) => {
 			Prod.find().skip(5).limit(7)
 			.then(sales => {
-			res.render('add', { csrfToken: req.csrfToken() },{
+			res.render('add', {
 				sales:sales
 			});
 				})
@@ -556,10 +557,10 @@ app.get('/rules', (req, res) => {
 			})
 });
 
-app.get('/addbrand',csrfProtection, isLoggedIn, (req, res) => {
+app.get('/addbrand', isLoggedIn, (req, res) => {
 		Prod.find().skip(5).limit(7)
 		.then(sales => {
-		res.render('addbrand', { csrfToken: req.csrfToken() },{
+		res.render('addbrand',{
 			sales:sales
 		});
 			})
@@ -614,7 +615,7 @@ app.post('/deleteprod', isLoggedIn,  (req, res) => {
 
   });
 });
-app.post('/update',parseForm, csrfProtection, isLoggedIn, (req, res) => {
+app.post('/update', isLoggedIn, (req, res) => {
 			var first_name = req.body.first_name;
 			var second_name = req.body.second_name;
 			var login = req.body.login;
@@ -722,7 +723,7 @@ app.delete('/deletefromcart*', isLoggedIn,  (req, res) => {
             .catch(err => res.status(404).json({ error: "ERROR" }));
 });
 
-app.post('/add',parseForm, csrfProtection, isLoggedIn, (req, res) => {
+app.post('/add',parseForm,  (req, res) => {
 	var title = req.body.title;
 	var color = req.body.color;
 	var weight = req.body.weight;
@@ -778,7 +779,7 @@ app.post('/add',parseForm, csrfProtection, isLoggedIn, (req, res) => {
 	}
 });
 
-app.post('/addbrand',parseForm, csrfProtection, isLoggedIn, (req, res) => {
+app.post('/addbrand', isLoggedIn, (req, res) => {
 	var name = req.body.name;
 	var founder = req.body.founder;
 	var date = req.body.date;
