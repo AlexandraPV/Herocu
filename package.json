@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -14,6 +13,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "busboy-body-parser": "^0.2.0",
+    "connect": "^2.30.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
@@ -23,11 +23,11 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "promised-mongo": "^1.2.0"
+    "promised-mongo": "^1.2.0",
+    "session-mongoose": "^0.5.2"
   },
   "engines": {
-  "node": "4.5.0",
-  "npm": "2.15.9"
-}
-
+    "node": "4.5.0",
+    "npm": "2.15.9"
+  }
 }
