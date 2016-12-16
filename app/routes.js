@@ -74,7 +74,7 @@ app.get('/propag*', isLoggedIn, (req, res) => {
 app.get('/brpag*', isLoggedIn, (req, res) => {
                var decrease = req.path;
                decrease = decrease.slice(7);
-
+             var i = parseInt(decrease);
                Brand.find()
                 .then(pr => {
                   var count = pr.length;
@@ -507,7 +507,7 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
                               Prod.find().skip(1).limit(7)
                               .then(sales => {
 
-                                Prod.find({brand:{'$regex': '.*' + value + '.*', '$options': '$i'}})
+                                Prod.find({title:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                                   .then(prods => {
                                     Prod.find()
                                      .then(pr => {
@@ -591,11 +591,12 @@ app.post('/addtolist', isLoggedIn,  (req, res) => {
 app.post('/deleteprod', isLoggedIn,  (req, res) => {
 			var name = req.body.prtitle;
 		  var id= req.body.prid;
-
+      console.log(name);
 			User.find({"identef": parseInt(id)})
 			.then(users => {
 
-						Prod.find({"title": name}, function(err, prod) {
+						Prod.findOne({title: name}, function(err, prod) {
+              console.log(prod);
               prod.remove();
 				})
 				.then(() => res.redirect('/products'))
