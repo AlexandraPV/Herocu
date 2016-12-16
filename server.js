@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 
 
 
-app.use(express.session({ store: new SessionStore({
+app.use(session({ store: new SessionStore({
     url: 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz',
     interval: 1200000}),
 		secret: 'appallowpasstook' }));
