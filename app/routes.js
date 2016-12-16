@@ -115,6 +115,7 @@ app.get('/products/*',isLoggedIn, (req, res) => {
 
     	Prod.findOne({ href: uri_dec})
     		.then(prod => {
+          console.log(prod.comments);
 
     			Prod.find().skip(5).limit(7)
     			.then(sales => {
@@ -808,20 +809,20 @@ app.post('/addbrand', isLoggedIn, (req, res) => {
 	}
 });           //////////
 
-/*app.post('/deleteprod',isLoggedIn, (req, res) => {
+app.post('/deletebrand',isLoggedIn, (req, res) => {
 	var title = req.body.prtitle;
   var id= req.body.prid;
 
 	User.find({"identef": parseInt(id)})
 	.then(users => {
 
-    Prod.find({"title": name}, function(err, prod) {
+    Brand.find({"name": name}, function(err, prod) {
       prod.remove();
 		})
 		.then(() => res.redirect('/products'))
 		.catch(err => res.status(500).end(err));
 
-});   */               /////////
+});                  /////////
 
 app.get('/userslist',isLoggedIn, (req, res) => {
   User.find().limit(9)

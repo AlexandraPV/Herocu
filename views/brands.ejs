@@ -89,7 +89,7 @@
                           <% if(user.local.role =="admin") { %>
                             <div class="info">
                           <div class="actions">
-                          <form action = "/deleteprod" method="post">
+                          <form action = "/deletebrand" method="post">
                              <input type="text" hidden="true" name="prtitle" value="<%= prod.name %>">
                              <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
                              <input class = "b" type="submit" name="submit" value="X">
