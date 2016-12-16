@@ -11,7 +11,7 @@ var prodSchema = mongoose.Schema({
   lastprice: Number,
   type:String,
   brand: String,
-  comments: [String],
+  comments: [[String], [String]],
   avatar1: String,
   avatar2: String,
   avatar3: String,
