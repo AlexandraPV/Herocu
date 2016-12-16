@@ -481,12 +481,9 @@ app.get('/profile', isLoggedIn, function(req, res) {
 });
 
 app.get('/search',isLoggedIn, (req, res) => {
-
-                var value = req.url;
-
+    var value = req.url;
                 value = value.slice(10);
-                var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
-
+                console.log(value);
                    Prod.find({title:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                      .then(prods => res.json(prods))
                      .catch(err => res.status(500).end(err));
@@ -494,7 +491,7 @@ app.get('/search',isLoggedIn, (req, res) => {
 
 app.get('/searchsimpl',isLoggedIn, (req, res) => {
 
-                var value = req.url;
+            var value = req.url;
                 var value = value.slice(21, -25);
                 //var bar = br.slice(0, 24);
                 console.log(value);
@@ -506,7 +503,7 @@ app.get('/searchsimpl',isLoggedIn, (req, res) => {
                        Prod.find()
                         .then(pr => {
                           var count = pr.length;
-                     res.render('searchsimp', {
+                     res.render('search', {
                        value: value,
                        prods: prods,
                        sales: sales,
@@ -521,6 +518,7 @@ app.get('/searchsimpl',isLoggedIn, (req, res) => {
 });
 
 app.get('/searchwind',isLoggedIn, (req, res) => {
+
                   var value = req.url;
 
                   value = value.slice(14);
@@ -545,6 +543,7 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
                                 });
                                      })
                                     .catch(err => res.status(500).end(err));
+
 
 });
 
