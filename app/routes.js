@@ -121,7 +121,7 @@ app.get('/products/*',isLoggedIn,  (req, res) => {
     	Prod.findOne({ href: uri_dec})
     		.then(prod => {
           console.log(prod.comments);
-          console.log(prod.comments[0]);
+          console.log(prod.comments[0][1]);
     			Prod.find().skip(5).limit(7)
     			.then(sales => {
 
