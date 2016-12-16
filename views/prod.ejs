@@ -199,6 +199,7 @@ function changeImg(lin){
       <% for (var i = 0; i < mas.length; i++) {  %>
         <li>
             <div class="cont">
+              <div id="new">
               <% if(user.local.role =="admin") { %>
               <form action = "/deletecom" method="post">
 
@@ -210,7 +211,7 @@ function changeImg(lin){
                   </form >
                 <%}%>
                  <a  class="title" href="/profile/<%=mas[i][0]%>"><%=mas[i][0]%></a>
-
+</div>
             <p ><%= mas[i][1]%></p>
             </div>
         </li>
