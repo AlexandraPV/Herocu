@@ -8,7 +8,9 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
-var SessionStore = require('session-mongoose')(express);
+var RedisStore = require('connect-redis')(express);
+
+
 var configDB = require('./config/database.js');
 //var User = require('../app/models/user');
 const mongodb = require('promised-mongo');
@@ -29,9 +31,13 @@ app.set('view engine', 'ejs');
 
 
 
+app.configure(function(){
 
-app.use(session({ store: db,
-		secret: 'appallowpasstook' }));
+  app.use(express.cookieParser());
+  app.use(express.session({ store: new RedisStore, secret: 'lolcat' }));
+  // app.use(express.session({ secret: 'your secret here' }));
+});
+//app.use(session({ secret: 'appallowpasstook' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
