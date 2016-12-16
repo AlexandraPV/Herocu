@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var csrf = require('csurf');
 var bodyParser = require('body-parser');
 var express = require('express');
-
+app.use(cookieParser());
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
 
@@ -129,7 +129,7 @@ app.get('/products/*',isLoggedIn, csrfProtection, (req, res) => {
     			.then(sales => {
 
     			res.render('prod', {
-              csrfToken: req.csrfToken(),
+            csrfToken: req.csrfToken(),
     				prod: prod,
             sales: sales,
             user : req.user
