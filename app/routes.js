@@ -714,7 +714,8 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
       Composition.findOneAndUpdate({"href": id}, {
         $pull: {
             comments: {
-                _id: i
+              login: log,
+              text: com
             }
         }
     })
