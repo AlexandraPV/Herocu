@@ -47,8 +47,9 @@ app.get('/propag*', isLoggedIn, (req, res) => {
            var decrease = req.path;
            decrease = decrease.slice(7);
            var i = parseInt(decrease);
-         Prod.count()
-           .then(count => {
+           Prod.find()
+            .then(pr => {
+              var count = pr.length;
          Prod.find().skip(0+i*9).limit(9+i*9)
              .then(prods => {
          Prod.find().skip(4).limit(7)
@@ -74,8 +75,9 @@ app.get('/brpag*', isLoggedIn, (req, res) => {
                var decrease = req.path;
                decrease = decrease.slice(7);
 
-             Brand.count()
-               .then(count => {
+               Brand.find()
+                .then(pr => {
+                  var count = pr.length;
              Brand.find().skip(0+i*9).limit(9+i*9)
                  .then(prods => {
              Prod.find().skip(4).limit(7)
@@ -196,8 +198,9 @@ app.get('/products',isLoggedIn, (req, res) => {
 
                    Prod.find({title:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                      .then(prods => {
-                       Prod.count()
-                        .then(count => {
+                       Prod.find()
+                        .then(pr => {
+                          var count = pr.length;
                      res.render('products', {
                        prods: prods,
                        sales: sales,
@@ -214,8 +217,9 @@ app.get('/products',isLoggedIn, (req, res) => {
       		.then(prods => {
       			Prod.find().skip(1).limit(7)
       			.then(sales => {
-              Prod.count()
-               .then(count => {
+              Prod.find()
+               .then(pr => {
+                 var count = pr.length;
       			res.render('products', {
       				prods: prods,
       				sales:sales,
@@ -243,8 +247,9 @@ app.get('/brands',isLoggedIn, (req, res) => {
 
                      Brand.find({name:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                        .then(prods => {
-                         Brand.count()
-                          .then(count => {
+                         Brand.find()
+                          .then(pr => {
+                            var count = pr.length;
                        res.render('brands', {
                          prods: prods,
                          sales: sales,
@@ -476,8 +481,9 @@ app.get('/searchsimpl',isLoggedIn, (req, res) => {
 
                    Prod.find({brand:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                      .then(prods => {
-                       Prod.count()
-                        .then(count => {
+                       Prod.find()
+                        .then(pr => {
+                          var count = pr.length;
                      res.render('searchsimp', {
                        value: value,
                        prods: prods,
@@ -503,8 +509,9 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
 
                                 Prod.find({brand:{'$regex': '.*' + value + '.*', '$options': '$i'}})
                                   .then(prods => {
-                                    Prod.count()
-                                     .then(count => {
+                                    Prod.find()
+                                     .then(pr => {
+                                       var count = pr.length;
                                   res.render('search', {
                                     value: value,
                                     prods: prods,
@@ -594,7 +601,7 @@ app.post('/deleteprod', isLoggedIn,  (req, res) => {
 				.then(() => res.redirect('/products'))
 				.catch(err => res.status(500).end(err));
 
-});
+  });
 });
 app.post('/update', isLoggedIn, (req, res) => {
 			var first_name = req.body.first_name;
@@ -716,20 +723,20 @@ app.post('/add', isLoggedIn, (req, res) => {
 	var brand = req.body.brand;
 	var admEmail = req.body.email;
 	var admpass = req.body.password;
-	var avaFile1 = req.files.avatar1.path;
-	var avaFile2 = req.files.avatar2.path;
-	var avaFile3 = req.files.avatar3.path;
-	var avaFile4 = req.files.avatar4.path;
+	var avaFile1 = req.files.avatar1;
+	var avaFile2 = req.files.avatar2;
+	var avaFile3 = req.files.avatar3;
+	var avaFile4 = req.files.avatar4;
 	var hrefProd = req.body.title;
     console.log(avaFile1);
 	hrefProd = hrefProd.replace(/ /g, '').replace(/\//g, '');
 	hrefProd= hrefProd.toLowerCase();
 	var hrProd =( '/' + hrefProd);
 
-	//var base64String1 = avaFile1.data.toString('base64');
-	//var base64String2 = avaFile2.data.toString('base64');
-	//var base64String3 = avaFile3.data.toString('base64');
-	//var base64String4 = avaFile4.data.toString('base64');
+	var base64String1 = avaFile1.data.toString('base64');
+	var base64String2 = avaFile2.data.toString('base64');
+	var base64String3 = avaFile3.data.toString('base64');
+	var base64String4 = avaFile4.data.toString('base64');
 	if (!title || !color || !brand || !price || !lastprice || !type || !weight || !description || !guarantee ) res.status(400).end('not ok');
 	else {
 		Prod.findOne({ title: title}, function(err, prod){
@@ -746,10 +753,10 @@ app.post('/add', isLoggedIn, (req, res) => {
             type:type,
             brand: brand,
             comments: [],
-            avatar1: avaFile1,
-            avatar2: avaFile2,
-            avatar3: avaFile3,
-            avatar4: avaFile4,
+            avatar1: base64String1,
+            avatar2: base64String2,
+            avatar3: base64String3,
+            avatar4: base64String4,
             href: hrefProd,
               });
               newPro.save();
@@ -789,7 +796,7 @@ app.post('/addbrand', isLoggedIn, (req, res) => {
             date: date,
             staf: stafI,
             cost: costI,
-            avatar1: avaFile1,
+            avatar1: base64String1,
             href: hrefProd
               });
               newBr.save();
@@ -820,8 +827,9 @@ app.get('/userslist',isLoggedIn, (req, res) => {
     .then(prods => {
       Prod.find().skip(1).limit(7)
       .then(sales => {
-        Prod.count()
-          .then(count => {
+        User.find()
+         .then(pr => {
+           var count = pr.length;
       res.render('userslist', {
         prods: prods,
         sales: sales,

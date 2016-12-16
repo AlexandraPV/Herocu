@@ -65,7 +65,9 @@ app.get('/', (req, res) => {
     console.log(prods);
 			Prod.find().skip(4).limit(7).exec(function(err, sales){
 
-				Prod.count().exec(function(err, count){
+				Prod.find()
+				 .then(pr => {
+					 var count = pr.length;
 
 			res.render('index', {
 				sales: sales,
@@ -84,8 +86,9 @@ app.get('/pag*', (req, res) => {
 			var decrease = req.path;
 			decrease = decrease.slice(4);
 			var i = parseInt(decrease);
-		Prod.count()
-			.then(count => {
+			Prod.find()
+			 .then(pr => {
+				 var count = pr.length;
 		Prod.find().skip(0+i*9).limit(9+i*9)
 				.then(prods => {
 	  Prod.find().skip(4).limit(7)
