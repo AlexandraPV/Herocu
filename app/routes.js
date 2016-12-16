@@ -822,7 +822,8 @@ app.post('/deletebrand',isLoggedIn, (req, res) => {
 		.then(() => res.redirect('/products'))
 		.catch(err => res.status(500).end(err));
 
-});                  /////////
+});
+});                    /////////
 
 app.get('/userslist',isLoggedIn, (req, res) => {
   User.find().limit(9)
