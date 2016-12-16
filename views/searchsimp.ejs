@@ -90,10 +90,11 @@
             <section id="content">
                 <div id="columL" >
                      <h3>You find "<%=value%>"</h3>
-                     <div class="bl">
+
                     <ul>
+                       <div class="bl-container">
                       <% prods.filter(x => x.title).forEach( prod => { %>
-<div id="blnew">
+<div id="bl">
                         <li>
                           <% if(user.local.role =="admin") { %>
                             <div class="info">
@@ -129,9 +130,9 @@
   </div>
 
                         <% }); %>
-
+</div>
                     </ul>
-                  </div>
+
                 </div>
                 <div id="columR">
                     <h3>Top sells</h3>

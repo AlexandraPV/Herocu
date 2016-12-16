@@ -462,7 +462,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
 app.get('/search',isLoggedIn, (req, res) => {
 
                 var value = req.url;
-                var list=[];
+
                 value = value.slice(10);
                 var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
 
@@ -813,16 +813,14 @@ app.post('/deletebrand',isLoggedIn, (req, res) => {
 	var title = req.body.prtitle;
   var id= req.body.prid;
 
-	User.find({"identef": parseInt(id)})
-	.then(users => {
-
-    Brand.find({"name": title}, function(err, prod) {
-      prod.remove();
+    Brand.findOne({"name": title}, function(err, brand) {
+      brand.remove();
 		})
+
 		.then(() => res.redirect('/brands'))
 		.catch(err => res.status(500).end(err));
 
-});
+
 });                    /////////
 
 app.get('/userslist',isLoggedIn, (req, res) => {
