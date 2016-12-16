@@ -197,4 +197,4 @@ require('./app/routes.js')(app, passport);
 require('./config/passport')(passport);
 
 
-app.listen(port, () => console.log('App started.'));
+app.listen(port, () => console.log('App started.'+ port));
