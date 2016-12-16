@@ -1,5 +1,13 @@
 
 const mongodb = require('promised-mongo');
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
+var bodyParser = require('body-parser');
+var express = require('express');
+
+var csrfProtection = csrf({ cookie: true });
+var parseForm = bodyParser.urlencoded({ extended: false });
+
 const url = 'mongodb://alisandra:maugli98lisik@ds127958.mlab.com:27958/magaz';
 //const db = mongodb(url);
 var mongoose = require('mongoose');
@@ -13,30 +21,30 @@ app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
 });
 
-app.get('/login', function(req, res) {
+app.get('/login',csrfProtection, function(req, res) {
 
       Prod.find().skip(2).limit(7)
      .then(sales => {
-     res.render('login.ejs',{
+     res.render('login.ejs', { csrfToken: req.csrfToken() },{
        sales:sales
      });
        })
 });
 
-app.get('/signup', function(req, res) {
+app.get('/signup',csrfProtection, function(req, res) {
 
       Prod.find().skip(4).limit(7)
     	.then(sales => {
-    	res.render('signup.ejs',{
+    	res.render('signup.ejs', { csrfToken: req.csrfToken() },{
     		sales:sales
     	});
     		})
 });
 
-app.get('/update', isLoggedIn, function(req, res) {
+app.get('/update',csrfProtection, isLoggedIn, function(req, res) {
       Prod.find().skip(4).limit(7)
       .then(sales => {
-      res.render('update.ejs',{
+      res.render('update.ejs', { csrfToken: req.csrfToken() },{
         sales:sales,
         user : req.user
       });
@@ -99,7 +107,7 @@ app.get('/brpag*', isLoggedIn, (req, res) => {
 
 });
 
-app.post('/addcomment',isLoggedIn, (req, res) => {
+app.post('/addcomment',parseForm, csrfProtection,isLoggedIn, (req, res) => {
     var title = req.body.prtitle;
     var com = req.body.description;
     var user =req.user;
@@ -529,10 +537,10 @@ app.get('/searchwind',isLoggedIn, (req, res) => {
 
 
 
-app.get('/add', isLoggedIn, (req, res) => {
+app.get('/add',csrfProtection, isLoggedIn, (req, res) => {
 			Prod.find().skip(5).limit(7)
 			.then(sales => {
-			res.render('add',{
+			res.render('add', { csrfToken: req.csrfToken() },{
 				sales:sales
 			});
 				})
@@ -547,10 +555,10 @@ app.get('/rules', (req, res) => {
 			})
 });
 
-app.get('/addbrand', isLoggedIn, (req, res) => {
+app.get('/addbrand',csrfProtection, isLoggedIn, (req, res) => {
 		Prod.find().skip(5).limit(7)
 		.then(sales => {
-		res.render('addbrand',{
+		res.render('addbrand', { csrfToken: req.csrfToken() },{
 			sales:sales
 		});
 			})
@@ -605,7 +613,7 @@ app.post('/deleteprod', isLoggedIn,  (req, res) => {
 
   });
 });
-app.post('/update', isLoggedIn, (req, res) => {
+app.post('/update',parseForm, csrfProtection, isLoggedIn, (req, res) => {
 			var first_name = req.body.first_name;
 			var second_name = req.body.second_name;
 			var login = req.body.login;
@@ -713,7 +721,7 @@ app.delete('/deletefromcart*', isLoggedIn,  (req, res) => {
             .catch(err => res.status(404).json({ error: "ERROR" }));
 });
 
-app.post('/add', isLoggedIn, (req, res) => {
+app.post('/add',parseForm, csrfProtection, isLoggedIn, (req, res) => {
 	var title = req.body.title;
 	var color = req.body.color;
 	var weight = req.body.weight;
@@ -769,7 +777,7 @@ app.post('/add', isLoggedIn, (req, res) => {
 	}
 });
 
-app.post('/addbrand', isLoggedIn, (req, res) => {
+app.post('/addbrand',parseForm, csrfProtection, isLoggedIn, (req, res) => {
 	var name = req.body.name;
 	var founder = req.body.founder;
 	var date = req.body.date;
@@ -1142,18 +1150,18 @@ app.post('/apiproductsupdate/*', function(req, res, next) {
 ///////////////////////JSON////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
-app.get('/logout', function(req, res) {
+app.get('/logout',csrfProtection, function(req, res) {
         req.logout();
         res.redirect('/login');
 });
 
-app.post('/signup', passport.authenticate('local-signup', {
+app.post('/signup',parseForm, csrfProtection, passport.authenticate('local-signup', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
 }));
 
-app.post('/login', passport.authenticate('local-login', {
+app.post('/login',parseForm, csrfProtection, passport.authenticate('local-login', {
           successRedirect : '/profile', // redirect to the secure profile section
           failureRedirect : '/login', // redirect back to the signup page if there is an error
           failureFlash : true // allow flash messages

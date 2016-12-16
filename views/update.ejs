@@ -69,7 +69,7 @@
                 <div id="columL">
                      <h3>Registration</h3>
                 <form action='/update' method='POST' enctype="multipart/form-data" class='reg-form rf '>
-
+ <input type="hidden" name="_csrf" value="<%=csrfToken%>">
           	<div class='form-row'>
              			<label for='form_fname'>First Name: </label>
                  		<input type='text' class="rfield test" id='form_fname' name='first_name' value="<%=user.local.first_name%>">
@@ -110,7 +110,7 @@
              		</div>
                <input type="text" hidden="true" name="prid" value="<%= user.identef%>">
 
-              
+
 
              		<div class="form-row">
              			<input type="submit" class="btn_submit disabled" value='Go'>
