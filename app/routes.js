@@ -109,7 +109,7 @@ app.post('/addcomment', isLoggedIn, (req, res) => {
     var com = req.body.description;
     var user =req.user;
 
-    Prod.findAndUpdate({"title": title}, {
+    Prod.findOneAndUpdate({"title": title}, {
            $push: {
                'comments': {
                    login: user.local.login,
@@ -711,7 +711,7 @@ app.post('/deletecom',isLoggedIn,  (req, res) => {
 
 		.then(prod => {
 			//console.log(d);
-      Composition.findAndUpdate({"href": id}, {
+      Composition.findOneAndUpdate({"href": id}, {
         $pull: {
             comments: {
                 _id: i
