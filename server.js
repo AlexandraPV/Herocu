@@ -196,5 +196,12 @@ app.get('/json', (req, res) => {
 require('./app/routes.js')(app, passport);
 require('./config/passport')(passport);
 
+function sessionCleanup() {
+    sessionStore.all(function(err, sessions) {
+        for (var i = 0; i < sessions.length; i++) {
+            sessionStore.get(sessions[i], function() {} );
+        }
+    });
+}
 
 app.listen(port, () => console.log('App started.'+ port));
