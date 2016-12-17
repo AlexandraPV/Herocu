@@ -873,7 +873,7 @@ app.get('/userslist',isLoggedIn, (req, res) => {
 ///////////////////////JSON////////////////////////////////////////
 
 
-app.get('/jsonphones', (req, res) => {
+app.get('/apiphones', (req, res) => {
      			Prod.find({"type":"phon"})
      				.then(prod => res.json(prod))
      				/*	Prod.find().skip(1).limit(7)
@@ -882,7 +882,7 @@ app.get('/jsonphones', (req, res) => {
 
 });
 
-app.get('/jsoncomp', (req, res) => {
+app.get('/apicomp', (req, res) => {
           Prod.find({"type":"comp"})
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -891,7 +891,7 @@ app.get('/jsoncomp', (req, res) => {
 
 });
 
-app.get('/jsonhome', (req, res) => {
+app.get('/apihome', (req, res) => {
           Prod.find({"type":"home"})
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -900,7 +900,7 @@ app.get('/jsonhome', (req, res) => {
 
 });
 
-app.get('/jsonbook', (req, res) => {
+app.get('/apibook', (req, res) => {
           Prod.find({"type":"book"})
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -909,7 +909,7 @@ app.get('/jsonbook', (req, res) => {
 
 });
 
-app.get('/jsonapplhome', (req, res) => {
+app.get('/apiapplhome', (req, res) => {
         Prod.find({"type":"applhome"})
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -917,7 +917,7 @@ app.get('/jsonapplhome', (req, res) => {
               .catch(err => res.status(404).json({ error: err }));
 });
 
-app.get('/jsonapplcloth', (req, res) => {
+app.get('/apiapplcloth', (req, res) => {
           Prod.find({"type":"applcloth"})
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -925,7 +925,7 @@ app.get('/jsonapplcloth', (req, res) => {
               .catch(err => res.status(404).json({ error: err }));
 });
 
-app.get('/jsonprofile', isLoggedIn, function(req, res) {
+app.get('/apiprofile', isLoggedIn, function(req, res) {
         var  user = req.user;
           if (!user){
       			res.json({'error':'need login'})
@@ -935,7 +935,7 @@ app.get('/jsonprofile', isLoggedIn, function(req, res) {
            }
 });
 
-app.get('/jsonproducts',isLoggedIn, (req, res) => {
+app.get('/apiproducts',isLoggedIn, (req, res) => {
         	Prod.find()
             .then(prod => res.json(prod))
             /*	Prod.find().skip(1).limit(7)
@@ -943,7 +943,7 @@ app.get('/jsonproducts',isLoggedIn, (req, res) => {
               .catch(err => res.status(404).json({ error: err }));
 })
 
-app.get('/jsoncart',isLoggedIn, (req, res) => {
+app.get('/apicart',isLoggedIn, (req, res) => {
              var user = req.user;
              var cart = user.cart;
               var mas=[]
@@ -972,7 +972,7 @@ app.get('/jsoncart',isLoggedIn, (req, res) => {
 ////////////////////////////////////////////////////////////////////
 
 
-app.get('/jsonlist',isLoggedIn, (req, res) => {
+app.get('/apilist',isLoggedIn, (req, res) => {
       var user = req.user;
       var list = user.list;
        var mas=[]
