@@ -9,6 +9,7 @@ body {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
     line-height: 17px;
+    width: 100%;
 }
 img {
     border: 0 none;
@@ -555,7 +556,7 @@ span#slide5:target ~ ul.slider li.track .tr5 {
 
     background-color: #FFFFFF;
     border: 1px solid #E0E0E0;
-    
+
     color: #383838;
     cursor:pointer;
     float: left;
