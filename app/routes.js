@@ -1002,10 +1002,10 @@ app.get('/jsonlist',isLoggedIn, (req, res) => {
 app.delete('/apiproducts/*', function(req, res, next) {
              var value = req.url;
              value = value.slice(13);
-             var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
+             //var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
          //  var name = req.params.brand_name;
            console.log(bar)
-           Prod.findOne({title:{'$regex': '.*' + value + '.*', '$options': '$i'}})
+           Prod.findOne({href:value})
          .then(prod =>
           Prod.remove({ 'name': bar})
           .then(del =>
