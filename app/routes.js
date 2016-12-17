@@ -1020,7 +1020,7 @@ app.get('/apiproducts/*', function(req, res, next) {
              var bar = value.slice(0, 1).toUpperCase() +  value.slice(1);
            //  var name = req.params.brand_name;
            console.log(bar)
-           Prod.findOne(({title:{'$regex': '.*' + value + '.*', '$options': '$i'}}))
+           Prod.find(({title:{'$regex': '.*' + value + '.*', '$options': '$i'}}))
            .then(prod =>res.json(prod))
            .catch(err => res.status(404).json({ error: "ERROR" }));
 
